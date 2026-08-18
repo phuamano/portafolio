@@ -1,3 +1,5 @@
+import type { Project } from '../types/project'
+
 const API_URL = 'http://localhost:8000/api'
 
 interface ApiResponse<T> {
@@ -31,4 +33,8 @@ export interface HelloResponse {
 
 export function getHello(): Promise<HelloResponse> {
   return request<HelloResponse>('/hello')
+}
+
+export function getProjects(): Promise<Project[]> {
+  return request<Project[]>('/projects')
 }

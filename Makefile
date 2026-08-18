@@ -46,6 +46,9 @@ cache-clear:
 	docker compose exec app php artisan config:clear
 	docker compose exec app php artisan route:clear
 
+clear:
+	docker compose exec app php artisan optimize:clear
+
 # Regla mágica para ignorar los argumentos dinámicos y evitar errores de Make
 %:
 	@:

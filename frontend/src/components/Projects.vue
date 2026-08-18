@@ -1,9 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { useReveal } from '../composables/useReveal';
-import { ref,computed } from 'vue';
-import { projects } from '../data/projects';
+import { ref,computed, onMounted } from 'vue';
+import { getProjects } from '../services/api';
+import { Project } from '../types/project';
 
 useReveal()
+
+const projects = ref<Project[]>([])
+
+const loading = ref(true)
+
+const error = ref<string | null>(null)
 
 const categories = ['All', 'E-commerce', 'Web Application', 'Software'];
 
@@ -11,9 +18,20 @@ const selectedCategory = ref('All');
 
 const filteredProjects = computed(() => {
   if (selectedCategory.value === 'All') {
-    return projects;
+    return projects.value;
   }
-  return projects.filter(project => project.category === selectedCategory.value);
+  return projects.value.filter(project => project.category === selectedCategory.value);
+});
+
+onMounted(async () => {
+  try {
+    projects.value = await getProjects();
+  }catch (err) {
+    error.value = 'Error al cargar los proyectos';
+    console.error(err);
+  } finally {
+    loading.value = false;
+  }
 });
 
 </script>
@@ -154,7 +172,7 @@ const filteredProjects = computed(() => {
             <!-- Link -->
             <div class="mt-10">
               <a
-                :href="project.url"
+                :href="project.url ?? '#'"
                 class="inline-flex items-center gap-3
                        text-sm font-medium text-white
                        transition group-hover:text-cyan-400"

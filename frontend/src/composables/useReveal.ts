@@ -1,15 +1,15 @@
 import { onMounted, onUnmounted } from 'vue'
 
-export function useReveal() {
-  let observer
+export function useReveal(): void {
+  let observer: IntersectionObserver | null = null
 
   onMounted(() => {
     observer = new IntersectionObserver(
-      (entries) => {
+      (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
+            observer?.unobserve(entry.target)
           }
         })
       },
@@ -19,9 +19,9 @@ export function useReveal() {
     )
 
     document
-      .querySelectorAll('.reveal')
+      .querySelectorAll<HTMLElement>('.reveal')
       .forEach((element) => {
-        observer.observe(element)
+        observer?.observe(element)
       })
   })
 

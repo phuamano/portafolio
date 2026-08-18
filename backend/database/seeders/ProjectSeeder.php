@@ -2,39 +2,61 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Project;
+use Illuminate\Database\Seeder;
 
 class ProjectSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        Project::truncate();
+
         Project::create([
+            'number' => '01',
             'title' => '3G Maquinarias',
-            'description' => 'Plataforma web para la gestión y presentación de maquinaria.',
-            'image' => '../../public//projects/3g-maquinarias.png',
+            'category' => 'Web Application',
+            'description' => 'Plataforma web para la presentación y gestión de maquinaria.',
+            'image' => '/projects/3g-maquinarias.png',
+            'technologies' => [
+                'Laravel',
+                'Vue',
+                'PostgreSQL',
+                'Tailwind CSS',
+            ],
             'url' => null,
             'github_url' => null,
             'featured' => true,
         ]);
 
         Project::create([
+            'number' => '02',
             'title' => 'Sistema Educativo',
-            'description' => 'Sistema web para la gestión de procesos educativos.',
-            'image' => '../../public//projects/educativa.png',
+            'category' => 'Software',
+            'description' => 'Sistema web desarrollado para la gestión de procesos educativos.',
+            'image' => '/projects/educativa.png',
+            'technologies' => [
+                'Laravel',
+                'Vue',
+                'MySQL',
+                'Tailwind CSS',
+            ],
             'url' => null,
             'github_url' => null,
             'featured' => true,
         ]);
 
         Project::create([
+            'number' => '03',
             'title' => 'Sistema Web',
+            'category' => 'Web Application',
             'description' => 'Aplicación web desarrollada para la gestión de información.',
-            'image' => '../../public//projects/sistema.png',
+            'image' => '/projects/sistema.png',
+            'technologies' => [
+                'Laravel',
+                'Vue',
+                'MySQL',
+                'JavaScript',
+            ],
             'url' => null,
             'github_url' => null,
             'featured' => false,
