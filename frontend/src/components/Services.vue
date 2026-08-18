@@ -1,25 +1,25 @@
-<script setup>
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { useReveal } from '../composables/useReveal'
+import { Service } from '../types/service'
+import { getServices } from '../services/api';
 
 useReveal()
 
-const services = [
-  {
-    number: '01',
-    title: 'Web & Apps',
-    description: 'Aplicaciones web modernas y escalables.',
-  },
-  {
-    number: '02',
-    title: 'E-commerce',
-    description: 'Tiendas online enfocadas en vender.',
-  },
-  {
-    number: '03',
-    title: 'Software',
-    description: 'Sistemas personalizados para tu negocio.',
-  },
-]
+const services = ref<Service[]>([])
+const loading = ref(true)
+const error = ref<string | null>(null)
+
+onMounted(async () => {
+  try {
+    services.value = await getServices()
+  } catch (err) {
+    error.value = 'No se pudieron cargar los servicios.'
+    console.error(err)
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <template>

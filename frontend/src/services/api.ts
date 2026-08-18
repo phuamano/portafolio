@@ -1,11 +1,7 @@
 import type { Project } from '../types/project'
+import { Service } from '../types/service'
 
 const API_URL = 'http://localhost:8000/api'
-
-interface ApiResponse<T> {
-  data: T
-  message?: string
-}
 
 async function request<T>(
   endpoint: string,
@@ -37,4 +33,8 @@ export function getHello(): Promise<HelloResponse> {
 
 export function getProjects(): Promise<Project[]> {
   return request<Project[]>('/projects')
+}
+
+export function getServices(): Promise<Service[]> {
+  return request<Service[]>('/services')
 }
