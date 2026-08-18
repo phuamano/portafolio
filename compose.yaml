@@ -1,0 +1,35 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: mi_portafolio_app
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+    depends_on:
+      - postgres
+    networks:
+      - mi_portafolio
+
+  postgres:
+    image: postgres:17
+    container_name: mi_portafolio_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: mi_portafolio
+      POSTGRES_USER: mi_portafolio
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mi_portafolio
+
+networks:
+  mi_portafolio:
+
+volumes:
+  postgres_data:

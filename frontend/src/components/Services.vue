@@ -1,4 +1,8 @@
 <script setup>
+import { useReveal } from '../composables/useReveal'
+
+useReveal()
+
 const services = [
   {
     number: '01',
@@ -21,7 +25,7 @@ const services = [
 <template>
   <section
     id="servicios"
-    class="bg-zinc-950 px-6 py-32"
+    class="reveal bg-zinc-950 px-6 py-32"
   >
     <div class="mx-auto max-w-7xl">
 

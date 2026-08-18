@@ -1,4 +1,6 @@
 <script setup>
+import { useReveal } from '../composables/useReveal'
+useReveal()
 const technologies = [
   { name: 'Laravel', type: 'Backend' },
   { name: 'Vue', type: 'Frontend' },
@@ -14,7 +16,7 @@ const technologies = [
 <template>
   <section
     id="tecnologias"
-    class="overflow-hidden bg-zinc-950 px-6 py-32"
+    class="reveal overflow-hidden bg-zinc-950 px-6 py-32"
   >
     <div class="mx-auto max-w-7xl">
 

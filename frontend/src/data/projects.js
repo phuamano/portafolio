@@ -1,0 +1,32 @@
+export const projects = [
+  {
+    id: 1,
+    number: '01',
+    title: '3G Maquinarias',
+    category: 'E-commerce',
+    description: 'Plataforma para maquinaria y equipos.',
+    technologies: ['Laravel', 'Vue', 'MySQL'],
+    image: '../../public/projects/3g-maquinarias.png',
+    url: '#',
+  },
+  {
+    id: 2,
+    number: '02',
+    title: 'Plataforma Educativa',
+    category: 'Web Application',
+    description: 'Gestión de cursos, usuarios y certificados.',
+    technologies: ['Laravel', 'Filament', 'Livewire'],
+    image: '../../public/projects/educativa.png',
+    url: '#',
+  },
+  {
+    id: 3,
+    number: '03',
+    title: 'Sistema Empresarial',
+    category: 'Software',
+    description: 'Automatización de procesos empresariales.',
+    technologies: ['Laravel', 'Vue', 'PostgreSQL'],
+    image: '../../public/projects/sistema.png',
+    url: '#',
+  },
+]

@@ -1,42 +1,27 @@
 <script setup>
-const projects = [
-  {
-    id: 1,
-    number: '01',
-    title: '3G Maquinarias',
-    category: 'E-commerce',
-    description: 'Plataforma para maquinaria y equipos.',
-    technologies: ['Laravel', 'Vue', 'MySQL'],
-    image: '/projects/3g-maquinarias.png',
-    url: '#',
-  },
-  {
-    id: 2,
-    number: '02',
-    title: 'Plataforma Educativa',
-    category: 'Web Application',
-    description: 'Gestión de cursos, usuarios y certificados.',
-    technologies: ['Laravel', 'Filament', 'Livewire'],
-    image: '/projects/educativa.png',
-    url: '#',
-  },
-  {
-    id: 3,
-    number: '03',
-    title: 'Sistema Empresarial',
-    category: 'Software',
-    description: 'Automatización de procesos empresariales.',
-    technologies: ['Laravel', 'Vue', 'PostgreSQL'],
-    image: '/projects/sistema.png',
-    url: '#',
-  },
-]
+import { useReveal } from '../composables/useReveal';
+import { ref,computed } from 'vue';
+import { projects } from '../data/projects';
+
+useReveal()
+
+const categories = ['All', 'E-commerce', 'Web Application', 'Software'];
+
+const selectedCategory = ref('All');
+
+const filteredProjects = computed(() => {
+  if (selectedCategory.value === 'All') {
+    return projects;
+  }
+  return projects.filter(project => project.category === selectedCategory.value);
+});
+
 </script>
 
 <template>
   <section
     id="proyectos"
-    class="bg-black px-6 py-32"
+    class="reveal bg-black px-6 py-32"
   >
     <div class="mx-auto max-w-7xl">
 
@@ -73,8 +58,20 @@ const projects = [
       <!-- Projects -->
       <div class="mt-20 space-y-8">
 
+        <div class="mt-12 flex flex-wrap gap-3">
+          <button
+            v-for="category in categories"
+            :key="category"
+            @click="selectedCategory = category"
+            class="rounded-full border border-white/10 px-5 py-2 text-sm
+                  transition hover:border-cyan-400 hover:text-cyan-400"
+          >
+            {{ category === 'All' ? 'Todos' : category }}
+          </button>
+        </div>
+
         <article
-          v-for="project in projects"
+          v-for="project in filteredProjects"
           :key="project.id"
           class="group grid overflow-hidden rounded-3xl
                  border border-white/10 bg-zinc-950
