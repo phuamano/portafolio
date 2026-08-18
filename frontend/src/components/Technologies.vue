@@ -1,16 +1,26 @@
-<script setup>
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { useReveal } from '../composables/useReveal'
+import { Technology } from '../types/technology'
+import { getTechnologies } from '../services/api'
+
 useReveal()
-const technologies = [
-  { name: 'Laravel', type: 'Backend' },
-  { name: 'Vue', type: 'Frontend' },
-  { name: 'PHP', type: 'Backend' },
-  { name: 'JavaScript', type: 'Frontend' },
-  { name: 'PostgreSQL', type: 'Database' },
-  { name: 'MySQL', type: 'Database' },
-  { name: 'Docker', type: 'Infrastructure' },
-  { name: 'Tailwind', type: 'Frontend' },
-]
+
+const technologies = ref<Technology[]>([])
+const loading = ref(true)
+const error = ref<string | null>(null)
+
+onMounted(async () => {
+  try {
+   technologies.value = await getTechnologies()
+
+  } catch (err) {
+    error.value = 'Error al cargar las tecnologías.'
+    console.error(err)
+  } finally {
+    loading.value = false
+  }
+})
 </script>
 
 <template>
@@ -53,7 +63,7 @@ const technologies = [
               class="text-xs text-gray-600
                      transition group-hover:text-cyan-400"
             >
-              0{{ technologies.indexOf(technology) + 1 }}
+              {{ technology.sort_order.toString().padStart(2, '0') }}
             </span>
 
             <span

@@ -18,6 +18,9 @@ status:
 seed:
 	docker compose exec app php artisan db:seed
 
+phpstan:
+	docker compose exec app php vendor/bin/phpstan analyse --memory-limit=512M
+
 .PHONY: migrate model controller migration seeder cache-clear
 
 # Comando básico para ejecutar migraciones
@@ -39,6 +42,12 @@ migration:
 # Comando dinámico para Seeders (Ej: make seeder ProjectSeeder)
 seeder:
 	docker compose exec app php artisan make:seeder $(filter-out $@,$(MAKECMDGOALS))
+
+request:
+	docker compose exec app php artisan make:request $(filter-out $@,$(MAKECMDGOALS))
+
+test:
+	docker compose exec app php artisan make:test $(filter-out $@,$(MAKECMDGOALS))
 
 # Atajo útil para limpiar la caché de Laravel rápidamente
 cache-clear:

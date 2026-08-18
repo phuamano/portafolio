@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libpq-dev \
     libzip-dev \
+    libicu-dev \
     zip \
     && docker-php-ext-install \
         pdo_pgsql \
@@ -14,6 +15,7 @@ RUN apt-get update && apt-get install -y \
         bcmath \
         pcntl \
         zip \
+        intl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

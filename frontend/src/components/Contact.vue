@@ -1,3 +1,38 @@
+<script setup lang="ts">
+  import { reactive, ref } from 'vue'
+  import { ContactForm } from '../types/contact';
+  import { sendContactMessage } from '../services/api';
+
+  const form = reactive<ContactForm>({
+    name: '',
+    email: '',
+    message: '',
+  })
+
+  const loading = ref(false)
+  const successMessage = ref('')
+  const errorMessage = ref('')
+
+  const submitForm = async(): Promise<void> => {
+    loading.value = true
+    successMessage.value = ''
+    errorMessage.value = ''
+
+    try {
+      const response = await sendContactMessage(form)
+      successMessage.value = response.message
+      form.name = ''
+      form.email = ''
+      form.message = ''
+    } catch (error) {
+      errorMessage.value = 'Ocurrió un error al enviar el mensaje. Por favor, inténtalo de nuevo.'
+    } finally {
+      loading.value = false
+    }
+  }
+
+</script>
+
 <template>
   <section
     id="contacto"
@@ -91,7 +126,7 @@
         <!-- Form -->
         <form
           class="space-y-6"
-          @submit.prevent
+          @submit.prevent = "submitForm"
         >
 
           <div>
@@ -105,8 +140,11 @@
 
             <input
               id="name"
+              v-model="form.name"
               type="text"
               placeholder="Tu nombre"
+              required
+              maxlength="100"
               class="mt-3 w-full border-b border-white/10
                      bg-transparent px-0 py-3 text-white
                      outline-none transition
@@ -126,8 +164,11 @@
 
             <input
               id="email"
+              v-model="form.email"
               type="email"
               placeholder="tu@email.com"
+              required
+              maxlength="255"
               class="mt-3 w-full border-b border-white/10
                      bg-transparent px-0 py-3 text-white
                      outline-none transition
@@ -147,8 +188,11 @@
 
             <textarea
               id="message"
+              v-model="form.message"
               rows="4"
               placeholder="¿Qué necesitas desarrollar?"
+              required
+              maxlength="5000"
               class="mt-3 w-full resize-none border-b
                      border-white/10 bg-transparent px-0
                      py-3 text-white outline-none transition
@@ -156,17 +200,36 @@
                      focus:border-cyan-400"
             />
           </div>
+          <!-- Success Message -->
+           <p
+            v-if="successMessage"
+            class="text-sm text-cyan-400"
+          >
+            {{ successMessage }}
+          </p>
+
+          <!-- Error Message -->
+          <p
+            v-if="errorMessage"
+            class="text-sm text-cyan-400"
+          >
+            {{ errorMessage }}
+          </p>
 
           <button
             type="submit"
+            :disabled="loading"
             class="group inline-flex items-center gap-3
                    rounded-full bg-cyan-400 px-7 py-3.5
                    font-semibold text-black transition
-                   hover:bg-cyan-300"
+                   hover:bg-cyan-300
+                   disabled:cursor-not-allowed
+                   disabled:opacity-50"
           >
-            Enviar mensaje
+            {{ loading ? 'Enviando...' : 'Enviar mensaje' }}
 
             <span
+              v-if="!loading"
               class="transition group-hover:translate-x-1"
             >
               →

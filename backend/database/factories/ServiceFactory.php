@@ -1,0 +1,28 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Service;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Service>
+ */
+class ServiceFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'number' => $this->faker->unique()->numerify('##'),
+            'title' => $this->faker->sentence(2),
+            'description' => $this->faker->sentence(8),
+            'is_active' => true,
+            'sort_order' => $this->faker->numberBetween(1, 10),
+        ];
+    }
+}

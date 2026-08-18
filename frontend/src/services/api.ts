@@ -1,5 +1,7 @@
+import { ContactForm, ContactResponse } from '../types/contact'
 import type { Project } from '../types/project'
 import { Service } from '../types/service'
+import { Technology } from '../types/technology'
 
 const API_URL = 'http://localhost:8000/api'
 
@@ -37,4 +39,15 @@ export function getProjects(): Promise<Project[]> {
 
 export function getServices(): Promise<Service[]> {
   return request<Service[]>('/services')
+}
+
+export function getTechnologies(): Promise<Technology[]> {
+  return request<Technology[]>('/technologies')
+}
+
+export function sendContactMessage(data: ContactForm): Promise<ContactResponse> {
+  return request<ContactResponse>('/contact', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
 }
