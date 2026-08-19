@@ -16,26 +16,45 @@ class TechnologiesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->label('Tecnología')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('type')
+                    ->label('Tipo')
+                    ->badge()
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('slug')
-                    ->searchable(),
+                    ->label('Slug')
+                    ->searchable()
+                    ->toggleable(),
+
                 TextColumn::make('icon')
-                    ->searchable(),
+                    ->label('Icono')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('sort_order')
+                    ->label('Orden')
                     ->numeric()
                     ->sortable(),
+
                 IconColumn::make('is_active')
+                    ->label('Activo')
                     ->boolean(),
+
                 TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('type')
-                    ->searchable(),
             ])
             ->filters([
                 //

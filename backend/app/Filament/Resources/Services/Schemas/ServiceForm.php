@@ -14,18 +14,32 @@ class ServiceForm
         return $schema
             ->components([
                 TextInput::make('number')
-                    ->required(),
-                TextInput::make('title')
-                    ->required(),
-                Textarea::make('description')
+                    ->label('Número')
                     ->required()
+                    ->maxLength(10),
+
+                TextInput::make('title')
+                    ->label('Título')
+                    ->required()
+                    ->maxLength(255),
+
+                Textarea::make('description')
+                    ->label('Descripción')
+                    ->required()
+                    ->rows(5)
                     ->columnSpanFull(),
+
                 TextInput::make('sort_order')
+                    ->label('Orden')
                     ->required()
                     ->numeric()
+                    ->integer()
+                    ->minValue(0)
                     ->default(0),
+
                 Toggle::make('is_active')
-                    ->required(),
+                    ->label('Activo')
+                    ->default(true),
             ]);
     }
 }

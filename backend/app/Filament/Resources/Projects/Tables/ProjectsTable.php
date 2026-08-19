@@ -16,27 +16,44 @@ class ProjectsTable
     {
         return $table
             ->columns([
-                TextColumn::make('title')
-                    ->searchable(),
-                ImageColumn::make('image'),
-                TextColumn::make('url')
-                    ->searchable(),
-                TextColumn::make('github_url')
-                    ->searchable(),
-                IconColumn::make('featured')
-                    ->boolean(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('number')
-                    ->searchable(),
+                    ->label('#')
+                    ->sortable(),
+
+                ImageColumn::make('image')
+                    ->label('Imagen'),
+
+                TextColumn::make('title')
+                    ->label('Proyecto')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('category')
+                    ->label('Categoría')
+                    ->badge()
                     ->searchable(),
+
+                IconColumn::make('featured')
+                    ->label('Destacado')
+                    ->boolean(),
+
+                TextColumn::make('url')
+                    ->label('Web')
+                    ->url(fn ($record) => $record->url)
+                    ->openUrlInNewTab()
+                    ->toggleable(),
+
+                TextColumn::make('github_url')
+                    ->label('GitHub')
+                    ->url(fn ($record) => $record->github_url)
+                    ->openUrlInNewTab()
+                    ->toggleable(),
+
+                TextColumn::make('created_at')
+                    ->label('Creado')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

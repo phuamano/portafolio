@@ -16,19 +16,38 @@ class ServicesTable
         return $table
             ->columns([
                 TextColumn::make('number')
-                    ->searchable(),
+                    ->label('#')
+                    ->searchable()
+                    ->sortable(),
+
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->label('Servicio')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('description')
+                    ->label('Descripción')
+                    ->limit(60)
+                    ->wrap()
+                    ->toggleable(),
+
                 TextColumn::make('sort_order')
+                    ->label('Orden')
                     ->numeric()
                     ->sortable(),
+
                 IconColumn::make('is_active')
+                    ->label('Activo')
                     ->boolean(),
+
                 TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
+                    ->label('Actualizado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
